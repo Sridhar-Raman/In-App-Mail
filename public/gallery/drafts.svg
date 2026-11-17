@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f6f5"/><stop offset="1" stop-color="#d9eeed"/></linearGradient>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#17383d" flood-opacity=".35"/></filter></defs>
+<rect width="800" height="500" fill="url(#bg)"/>
+<g filter="url(#sh)"><rect x="40" y="34" width="720" height="432" rx="16" fill="#fff"/></g>
+<clipPath id="w"><rect x="40" y="34" width="720" height="432" rx="16"/></clipPath>
+<g clip-path="url(#w)">
+<rect x="40" y="34" width="720" height="34" fill="#17383d"/>
+<circle cx="62" cy="51" r="5" fill="#e8f5f4"/><circle cx="80" cy="51" r="5" fill="#9ccfcf" opacity=".8"/><circle cx="98" cy="51" r="5" fill="#1b8a90"/>
+<text x="400" y="56" font-size="12" font-weight="600" fill="#e8f5f4" text-anchor="middle">SRI.CR In-App Mail</text>
+<rect x="40" y="68" width="160" height="398" fill="#fafdfd"/><rect x="200" y="68" width="1" height="398" fill="#e0dcd8"/>
+<rect x="54" y="82" width="132" height="38" rx="8" fill="#14979b"/><text x="120" y="106" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">Compose</text>
+<rect x="62" y="143" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="154" font-size="13" font-weight="500" fill="#3f5f63" >Inbox</text><rect x="156" y="140" width="24" height="18" rx="9" fill="#14979b"/><text x="168" y="153" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">12</text><rect x="50" y="170" width="140" height="30" rx="8" fill="#f2fafa"/><rect x="62" y="179" width="12" height="12" rx="3" fill="#14979b"/><text x="84" y="190" font-size="13" font-weight="700" fill="#17383d" >Draft</text><rect x="62" y="215" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="226" font-size="13" font-weight="500" fill="#3f5f63" >Sent</text><rect x="62" y="251" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="262" font-size="13" font-weight="500" fill="#3f5f63" >Starred</text><rect x="62" y="287" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="298" font-size="13" font-weight="500" fill="#3f5f63" >Trash</text>
+<rect x="218" y="80" width="526" height="32" rx="16" fill="#f2fafa"/><circle cx="238" cy="96" r="6" fill="none" stroke="#7a9396" stroke-width="2"/><path d="m243 101 5 5" stroke="#7a9396" stroke-width="2"/><text x="256" y="101" font-size="12.5" font-weight="400" fill="#7a9396" >Search here</text><text x="218" y="140" font-size="15" font-weight="800" fill="#17383d" >Draft</text><text x="744" y="140" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">3 drafts</text><rect x="201" y="150" width="559" height="1" fill="#e0dcd8"/>
+
+<rect x="218" y="173" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 167) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="179" r="15" fill="#b5dada"/><text x="272" y="184" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">D</text>
+<text x="298" y="176" font-size="13" font-weight="500" fill="#17383d" >To: Daniel Ortiz</text>
+<rect x="298" y="183" width="36" height="14" rx="4" fill="#fde4e1"/><text x="316" y="193.5" font-size="9" font-weight="700" fill="#b3261e" text-anchor="middle">Draft</text>
+<text x="342" y="194" font-size="12" font-weight="500" fill="#3f5f63" >Follow-up on lab results</text><text x="498.8" y="194" font-size="12" font-weight="400" fill="#7a9396" >– Hi Daniel, quick note on…</text>
+<text x="738" y="176" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">11:05 AM</text>
+
+<rect x="218" y="202" width="526" height="1" fill="#eef8f7"/>
+
+<rect x="218" y="222" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 216) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="228" r="15" fill="#17383d"/><text x="272" y="233" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">M</text>
+<text x="298" y="225" font-size="13" font-weight="500" fill="#17383d" >To: Team</text>
+<rect x="298" y="232" width="36" height="14" rx="4" fill="#fde4e1"/><text x="316" y="242.5" font-size="9" font-weight="700" fill="#b3261e" text-anchor="middle">Draft</text>
+<text x="342" y="243" font-size="12" font-weight="500" fill="#3f5f63" >Friday release checklist</text><text x="498.8" y="243" font-size="12" font-weight="400" fill="#7a9396" >– Please confirm your sign-off</text>
+<text x="738" y="225" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">Yesterday</text>
+
+<rect x="218" y="251" width="526" height="1" fill="#eef8f7"/>
+
+<rect x="218" y="271" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 265) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="277" r="15" fill="#9ccfcf"/><text x="272" y="282" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<text x="298" y="274" font-size="13" font-weight="500" fill="#17383d" >To: Sara Khan</text>
+<rect x="298" y="281" width="36" height="14" rx="4" fill="#fde4e1"/><text x="316" y="291.5" font-size="9" font-weight="700" fill="#b3261e" text-anchor="middle">Draft</text>
+<text x="342" y="292" font-size="12" font-weight="500" fill="#3f5f63" >(no subject)</text><text x="424.4" y="292" font-size="12" font-weight="400" fill="#7a9396" >– Thanks for the invoice…</text>
+<text x="738" y="274" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">Mon</text>
+<path transform="translate(712 280) scale(.7)" d="M14 14h2l-4-4-4 4h2v4h4zM6 7h12v12H6z" fill="none" stroke="#14979b" stroke-width="2"/>
+<rect x="218" y="300" width="526" height="1" fill="#eef8f7"/>
+</g></svg>

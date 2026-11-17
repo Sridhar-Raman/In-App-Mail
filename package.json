@@ -1,0 +1,30 @@
+{
+  "name": "mail-clone-app",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:server\" \"npm:dev:web\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev:server": "npm --prefix server run dev",
+    "start:server": "npm --prefix server start",
+    "install:all": "npm install && npm --prefix server install",
+    "dev:web": "vite",
+    "seed": "npm --prefix server run seed"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.105.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.62.0",
+    "react-router-dom": "^7.6.3",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.5",
+    "vite": "^7.1.0"
+  }
+}

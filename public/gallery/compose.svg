@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f6f5"/><stop offset="1" stop-color="#d9eeed"/></linearGradient>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#17383d" flood-opacity=".35"/></filter></defs>
+<rect width="800" height="500" fill="url(#bg)"/>
+<g filter="url(#sh)"><rect x="40" y="34" width="720" height="432" rx="16" fill="#fff"/></g>
+<clipPath id="w"><rect x="40" y="34" width="720" height="432" rx="16"/></clipPath>
+<g clip-path="url(#w)">
+<rect x="40" y="34" width="720" height="34" fill="#17383d"/>
+<circle cx="62" cy="51" r="5" fill="#e8f5f4"/><circle cx="80" cy="51" r="5" fill="#9ccfcf" opacity=".8"/><circle cx="98" cy="51" r="5" fill="#1b8a90"/>
+<text x="400" y="56" font-size="12" font-weight="600" fill="#e8f5f4" text-anchor="middle">SRI.CR In-App Mail</text>
+<rect x="40" y="68" width="160" height="398" fill="#fafdfd"/><rect x="200" y="68" width="1" height="398" fill="#e0dcd8"/>
+<rect x="54" y="82" width="132" height="38" rx="8" fill="#14979b"/><text x="120" y="106" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">Compose</text>
+<rect x="50" y="134" width="140" height="30" rx="8" fill="#f2fafa"/><rect x="62" y="143" width="12" height="12" rx="3" fill="#14979b"/><text x="84" y="154" font-size="13" font-weight="700" fill="#17383d" >Inbox</text><rect x="156" y="140" width="24" height="18" rx="9" fill="#14979b"/><text x="168" y="153" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">12</text><rect x="62" y="179" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="190" font-size="13" font-weight="500" fill="#3f5f63" >Draft</text><rect x="62" y="215" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="226" font-size="13" font-weight="500" fill="#3f5f63" >Sent</text><rect x="62" y="251" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="262" font-size="13" font-weight="500" fill="#3f5f63" >Starred</text><rect x="62" y="287" width="12" height="12" rx="3" fill="#b3dbda"/><text x="84" y="298" font-size="13" font-weight="500" fill="#3f5f63" >Trash</text>
+<rect x="218" y="80" width="526" height="32" rx="16" fill="#f2fafa"/><circle cx="238" cy="96" r="6" fill="none" stroke="#7a9396" stroke-width="2"/><path d="m243 101 5 5" stroke="#7a9396" stroke-width="2"/><text x="256" y="101" font-size="12.5" font-weight="400" fill="#7a9396" >Search here</text><text x="218" y="140" font-size="15" font-weight="800" fill="#17383d" >Inbox</text><text x="744" y="140" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">1–25 of 148</text><rect x="201" y="150" width="559" height="1" fill="#e0dcd8"/>
+<rect x="201" y="156" width="559" height="46" fill="#f8fcfc"/>
+<rect x="218" y="173" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 167) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="179" r="15" fill="#14979b"/><text x="272" y="184" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">P</text>
+<text x="298" y="176" font-size="13" font-weight="700" fill="#17383d" >Priya Raman</text>
+
+<text x="298" y="194" font-size="12" font-weight="700" fill="#17383d" >Q4 planning review</text><text x="417.6" y="194" font-size="12" font-weight="400" fill="#7a9396" >– Attaching the revised roadmap…</text>
+<text x="738" y="176" font-size="11" font-weight="700" fill="#17383d" text-anchor="end">10:42 AM</text>
+
+<rect x="218" y="202" width="526" height="1" fill="#eef8f7"/>
+<rect x="201" y="205" width="559" height="46" fill="#f8fcfc"/>
+<rect x="218" y="222" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 216) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="228" r="15" fill="#b5dada"/><text x="272" y="233" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">D</text>
+<text x="298" y="225" font-size="13" font-weight="700" fill="#17383d" >Daniel Ortiz</text>
+
+<text x="298" y="243" font-size="12" font-weight="700" fill="#17383d" >Lab results ready</text><text x="411.4" y="243" font-size="12" font-weight="400" fill="#7a9396" >– Please review before 3 PM</text>
+<text x="738" y="225" font-size="11" font-weight="700" fill="#17383d" text-anchor="end">9:15 AM</text>
+
+<rect x="218" y="251" width="526" height="1" fill="#eef8f7"/>
+
+<rect x="218" y="271" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 265) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="277" r="15" fill="#17383d"/><text x="272" y="282" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">M</text>
+<text x="298" y="274" font-size="13" font-weight="500" fill="#17383d" >Meera Nair</text>
+
+<text x="298" y="292" font-size="12" font-weight="500" fill="#3f5f63" >Re: Onboarding checklist</text><text x="454.8" y="292" font-size="12" font-weight="400" fill="#7a9396" >– Looks good</text>
+<text x="738" y="274" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">Yesterday</text>
+
+<rect x="218" y="300" width="526" height="1" fill="#eef8f7"/>
+
+<rect x="218" y="320" width="12" height="12" rx="3" fill="none" stroke="#b3dbda" stroke-width="1.5"/>
+<path transform="translate(232 314) scale(.9)" d="M12 15.4 8.2 17.7l1-4.3L5.9 10.5l4.4-.4L12 6.1l1.7 4 4.4.4-3.3 2.9 1 4.3z" fill="none" stroke="#b7a5af" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="272" cy="326" r="15" fill="#9ccfcf"/><text x="272" y="331" font-size="12.75" font-weight="700" fill="#fff" text-anchor="middle">A</text>
+<text x="298" y="323" font-size="13" font-weight="500" fill="#17383d" >Alex Chen</text>
+
+<text x="298" y="341" font-size="12" font-weight="500" fill="#3f5f63" >Team lunch Friday</text><text x="411.4" y="341" font-size="12" font-weight="400" fill="#7a9396" >– Vote for a place</text>
+<text x="738" y="323" font-size="11" font-weight="400" fill="#7a9396" text-anchor="end">Yesterday</text>
+
+<rect x="218" y="349" width="526" height="1" fill="#eef8f7"/><rect x="201" y="68" width="559" height="398" fill="#17383d" opacity=".28"/>
+</g><g filter="url(#sh)"><rect x="396" y="150" width="340" height="330" rx="12" fill="#fff"/></g>
+  <clipPath id="c"><rect x="396" y="150" width="340" height="330" rx="12"/></clipPath><g clip-path="url(#c)">
+  <rect x="396" y="150" width="340" height="34" fill="#17383d"/><text x="412" y="172" font-size="13" font-weight="700" fill="#fff" >New Message</text><text x="716" y="172" font-size="14" font-weight="400" fill="#e8f5f4" text-anchor="end">–  ×</text>
+  <text x="412" y="208" font-size="11.5" font-weight="400" fill="#7a9396" >From:</text><rect x="450" y="195" width="110" height="22" rx="11" fill="#f2fafa"/><circle cx="462" cy="206" r="8" fill="#9ccfcf"/><text x="462" y="211" font-size="6.8" font-weight="700" fill="#fff" text-anchor="middle">Y</text><text x="475" y="210" font-size="11" font-weight="600" fill="#17383d" >You</text>
+  <text x="412" y="238" font-size="11.5" font-weight="400" fill="#7a9396" >To:</text><rect x="450" y="225" width="108" height="22" rx="11" fill="#f2fafa"/><circle cx="462" cy="236" r="8" fill="#14979b"/><text x="462" y="241" font-size="6.8" font-weight="700" fill="#fff" text-anchor="middle">P</text><text x="475" y="240" font-size="11" font-weight="600" fill="#17383d" >Priya Raman</text>
+  <rect x="564" y="225" width="100" height="22" rx="11" fill="#f2fafa"/><circle cx="576" cy="236" r="8" fill="#17383d"/><text x="576" y="241" font-size="6.8" font-weight="700" fill="#fff" text-anchor="middle">M</text><text x="589" y="240" font-size="11" font-weight="600" fill="#17383d" >Meera Nair</text>
+  <rect x="412" y="256" width="308" height="1" fill="#e0dcd8"/><text x="412" y="276" font-size="12.5" font-weight="600" fill="#17383d" >Subject: Q4 roadmap feedback</text><rect x="412" y="284" width="308" height="1" fill="#e0dcd8"/>
+  <rect x="412" y="302" width="290" height="8" rx="4" fill="#def0ef"/><rect x="412" y="318" width="260" height="8" rx="4" fill="#def0ef"/><rect x="412" y="334" width="280" height="8" rx="4" fill="#def0ef"/><rect x="412" y="350" width="180" height="8" rx="4" fill="#def0ef"/>
+  <rect x="412" y="384" width="120" height="28" rx="8" fill="#f2fafa" stroke="#e8f5f4"/><text x="428" y="402" font-size="11.5" font-weight="600" fill="#17383d" >notes.docx</text>
+  <rect x="412" y="432" width="76" height="30" rx="15" fill="#14979b"/><text x="450" y="452" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Send</text>
+  <rect x="498" y="432" width="104" height="30" rx="15" fill="#fff" stroke="#c3e2e1" stroke-width="1.5"/><text x="550" y="452" font-size="12" font-weight="700" fill="#17383d" text-anchor="middle">Save draft</text>
+  </g></svg>

@@ -1,0 +1,22 @@
+# Render Blueprint: one web service that serves BOTH the API and the built website (same origin, so the login cookie just works).
+services:
+  - type: web
+    name: sricr-inapp-mail
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run build && npm --prefix server install --omit=dev
+    startCommand: npm --prefix server start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: 1
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false        # your Atlas connection string
+      - key: MONGODB_DB
+        value: sricr_inapp_mail
