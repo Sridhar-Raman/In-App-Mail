@@ -210,3 +210,6 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.02em; }
 .toast::before { background: linear-gradient(135deg, #ff5fa8, #ff268b); box-shadow: 0 4px 10px rgba(255, 38, 139, .35); color: #fff; }
 .toast-error { color: #8f1d2a; background: #fff6f5; box-shadow: 0 18px 44px rgba(120, 20, 28, .25), 0 0 0 1.5px #d4453b; }
 .toast-error::before { background: linear-gradient(135deg, #b3261e, #d4453b); box-shadow: 0 4px 10px rgba(179, 38, 30, .35); }
+
+/* Trash count: a quiet grey badge (unread / drafts stay pink) */
+.mb-badge.quiet, .mb-folder.active .mb-badge.quiet { background: rgba(82, 88, 112, .13); color: var(--slate); }

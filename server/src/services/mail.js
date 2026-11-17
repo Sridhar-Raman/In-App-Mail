@@ -191,11 +191,17 @@ export const listFolder = async (user, { folder, start, length, search, sort }) 
 
 export const folderCounts = async (user) => {
     const base = { user: user._id, deleted: false };
-    const [unread, drafts] = await Promise.all([
-        Mailbox.distinct('thread', { ...base, ...FOLDER_FILTER.INBOX, read: false }),
+    // Every folder's size, counted the way its list shows rows: one per conversation (drafts: one per draft).
+    const threads = (filter) => Mailbox.distinct('thread', { ...base, ...filter }).then((t) => t.length);
+    const [unread, inbox, drafts, sent, starred, trash] = await Promise.all([
+        threads({ ...FOLDER_FILTER.INBOX, read: false }),
+        threads(FOLDER_FILTER.INBOX),
         Mailbox.countDocuments({ ...base, ...FOLDER_FILTER.DRAFTS }),
+        threads(FOLDER_FILTER.SENT),
+        threads(FOLDER_FILTER.STARRED),
+        threads(FOLDER_FILTER.TRASH),
     ]);
-    return { UNREAD: unread.length, DRAFTS: drafts };
+    return { UNREAD: unread, INBOX: inbox, DRAFTS: drafts, SENT: sent, STARRED: starred, TRASH: trash };
 };
 
 /** Full conversation for the thread reader; marks what it returns as read. */

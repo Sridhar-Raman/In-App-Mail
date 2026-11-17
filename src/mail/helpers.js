@@ -1,11 +1,24 @@
-/** Folder rail — order, labels and icons as in the legacy in-app-mail screen. `countKey` is the badge from /mail/count. */
+/** Folder rail — order, labels and icons as in the legacy in-app-mail screen. Every folder shows its size from /mail/count. */
 export const FOLDERS = [
-    { code: 'INBOX', label: 'Inbox', icon: 'inbox', countKey: 'UNREAD' },
-    { code: 'DRAFTS', label: 'Drafts', icon: 'drafts', countKey: 'DRAFTS' },
+    { code: 'INBOX', label: 'Inbox', icon: 'inbox' },
+    { code: 'DRAFTS', label: 'Drafts', icon: 'drafts' },
     { code: 'SENT', label: 'Sent', icon: 'sent' },
     { code: 'STARRED', label: 'Starred', icon: 'star' },
     { code: 'TRASH', label: 'Trash', icon: 'trash' },
 ];
+
+/**
+ * The badge for a folder. Pink = needs attention (unread mail in the Inbox, saved drafts); grey = how many conversations
+ * the folder holds. Zero is shown too, so every folder always has a count.
+ */
+export const folderBadge = (code, counts = {}) => {
+    const total = counts[code] || 0;
+    if (code === 'INBOX' && counts.UNREAD)
+        return { value: counts.UNREAD, hot: true, title: `${counts.UNREAD} unread of ${total}` };
+    if (code === 'DRAFTS' && total)
+        return { value: total, hot: true, title: `${total} draft${total === 1 ? '' : 's'}` };
+    return { value: total, hot: false, title: `${total} conversation${total === 1 ? '' : 's'}` };
+};
 
 /** Bulk / row actions: the exact { statusCode, statusFlag } sent to /mail/status plus the legacy confirmation copy. */
 export const ACTIONS = {

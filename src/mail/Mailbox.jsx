@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCount, fetchDraft } from './api';
-import { FOLDERS } from './helpers';
+import { FOLDERS, folderBadge } from './helpers';
 import { useDialogs } from './Dialogs';
 import ConversationList from './ConversationList';
 import Thread from './Thread';
@@ -53,13 +53,13 @@ const Mailbox = ({ brand = null }) => {
                 </button>
                 <nav aria-label="Folders">
                     {FOLDERS.map((f) => {
-                        const badge = f.countKey ? counts[f.countKey] : 0;
+                        const badge = folderBadge(f.code, counts);
                         return (
                             <button key={f.code} type="button" className={`mb-folder${folder === f.code ? ' active' : ''}`}
                                 aria-current={folder === f.code ? 'page' : undefined} onClick={() => selectFolder(f.code)}>
                                 <Icon name={f.icon} size={22} />
                                 <span>{f.label}</span>
-                                {!!badge && <b className="mb-badge">{badge}</b>}
+                                <b className={`mb-badge${badge.hot ? '' : ' quiet'}`} title={badge.title}>{badge.value}</b>
                             </button>
                         );
                     })}
