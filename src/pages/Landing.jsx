@@ -55,9 +55,9 @@ const HeroCard = ({ name }) => {
     const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
     const date = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
     const tiles = [
-        { n: '12', label: 'Unread', color: 'linear-gradient(135deg,#5fb3b3,#14979b)' },
-        { n: '3', label: 'Drafts', color: 'linear-gradient(135deg,#f2fafa,#9ccfcf)' },
-        { n: '48', label: 'Sent this week', color: 'linear-gradient(135deg,#2aa5a8,#17383d)' },
+        { n: '12', label: 'Unread', color: 'linear-gradient(135deg,#657aad,#21408e)' },
+        { n: '3', label: 'Drafts', color: 'linear-gradient(135deg,#f2f5fa,#a0accb)' },
+        { n: '48', label: 'Sent this week', color: 'linear-gradient(135deg,#33529f,#1a233a)' },
     ];
     return (
         <aside className="hero-card" aria-label="Mailbox preview">

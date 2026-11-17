@@ -6,6 +6,7 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { DialogProvider } from './mail/Dialogs';
 import './index.css';
+import './theme.css';
 
 const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: true, staleTime: 5000 } },
