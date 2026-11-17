@@ -1,26 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../context/AuthContext';
-import { attachmentUrl, changeStatus, fetchThread } from './api';
+import { changeStatus, downloadAttachment, fetchAttachmentBlob, fetchThread, openAttachment } from './api';
 import { ACTIONS, buildReplySeed, formatFullDate, formatSize, initial } from './helpers';
 import { useDialogs } from './Dialogs';
 import Compose from './Compose';
 import Icon from './Icon';
 
-const Attachments = ({ items }) => (
-    <div className="th-atts">
-        {items.map((a) => (
-            <div key={a.id} className="th-att">
-                {/^image\/(png|jpe?g|gif|webp)$/.test(a.mime) && (
-                    <a href={attachmentUrl(a.id)} target="_blank" rel="noreferrer"><img src={attachmentUrl(a.id)} alt={a.name} loading="lazy" /></a>
-                )}
-                <a className="th-att-link" href={attachmentUrl(a.id, true)} title="Download">
-                    <Icon name="file" size={16} /><span>{a.name}</span><small>{formatSize(a.size)}</small><Icon name="download" size={16} />
-                </a>
-            </div>
-        ))}
-    </div>
-);
+/** Thumbnail of an image attachment (fetched with the login token, shown from a temporary blob URL). */
+const AttachmentImage = ({ id, name }) => {
+    const [src, setSrc] = useState('');
+    useEffect(() => {
+        let url = '';
+        let stale = false;
+        fetchAttachmentBlob(id)
+            .then((blob) => { if (!stale) { url = URL.createObjectURL(blob); setSrc(url); } })
+            .catch(() => {});
+        return () => { stale = true; if (url) URL.revokeObjectURL(url); };
+    }, [id]);
+    return src ? <img src={src} alt={name} /> : <span className="th-img-ph" aria-hidden="true" />;
+};
+
+const Attachments = ({ items }) => {
+    const { notify } = useDialogs();
+    const run = (task) => task().catch((err) => notify(err.message, 'error'));
+    return (
+        <div className="th-atts">
+            {items.map((a) => (
+                <div key={a.id} className="th-att">
+                    {/^image\/(png|jpe?g|gif|webp)$/.test(a.mime) && (
+                        <button type="button" className="th-img-btn" title="Open" onClick={() => run(() => openAttachment(a.id))}>
+                            <AttachmentImage id={a.id} name={a.name} />
+                        </button>
+                    )}
+                    <button type="button" className="th-att-link" title="Download" onClick={() => run(() => downloadAttachment(a.id, a.name))}>
+                        <Icon name="file" size={16} /><span>{a.name}</span><small>{formatSize(a.size)}</small><Icon name="download" size={16} />
+                    </button>
+                </div>
+            ))}
+        </div>
+    );
+};
 
 /** Conversation reader: collapsed history, expanded latest message, per-message star/trash, Reply / Reply All / Forward. */
 const Thread = ({ threadId, folder, onBack }) => {

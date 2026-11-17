@@ -30,12 +30,12 @@ Open http://localhost:5173. Vite proxies `/api` to the API on port 5000.
 | Method | Path | Body | Result |
 | --- | --- | --- | --- |
 | POST | `/api/auth/signup` | `fullName, email, password` | 201 `{ user }` |
-| POST | `/api/auth/login` | `email, password, remember?` | 200 `{ user }` + httpOnly cookie |
-| POST | `/api/auth/logout` | – | clears cookie |
-| GET | `/api/auth/me` | – | current `{ user }` or 401 |
+| POST | `/api/auth/login` | `email, password, remember?` | 200 `{ user, token }` |
+| POST | `/api/auth/logout` | – | 200 (the browser just forgets its token) |
+| GET | `/api/auth/me` | Bearer token | current `{ user }` or 401 |
 | GET | `/api/health` | – | `{ status: 'ok' }` |
 
-Passwords are hashed with bcrypt; the session is a 7-day JWT in an httpOnly cookie (a session cookie unless "Keep me signed in" is ticked).
+Passwords are hashed with bcrypt; login returns a JWT (7 days, or 1 day without "Keep me signed in") that the site sends as `Authorization: Bearer`.
 Users are stored in the `users` collection (`fullName`, `email` unique, `passwordHash`, timestamps).
 
 ## In-App Mail
@@ -47,4 +47,4 @@ Mail API: `/api/mail/*` (`server/src/routes/mail.js`), data in the `messages`, `
 
 ## Deploy
 
-See [DEPLOY.md](DEPLOY.md) — one Render web service serves the API and the built website (`render.yaml` is included).
+See [DEPLOY.md](DEPLOY.md): website on Vercel, API on Render (`render.yaml`), database on Atlas. `vercel.json` makes page refreshes work on Vercel.

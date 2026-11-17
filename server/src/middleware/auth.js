@@ -1,26 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-export const COOKIE_NAME = 'sricr_token';
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+/** Signed login token. "Keep me signed in" = 7 days, otherwise 1 day. */
+export const signToken = (userId, remember = true) => jwt.sign({ sub: userId }, process.env.JWT_SECRET, { expiresIn: remember ? '7d' : '1d' });
 
-export const signToken = (userId) => jwt.sign({ sub: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-/** httpOnly cookie so scripts can't read the token. `remember` = 7 days, otherwise a session cookie. */
-export const setAuthCookie = (res, token, remember) => res.cookie(COOKIE_NAME, token, {
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    ...(remember ? { maxAge: WEEK_MS } : {}),
-});
-
-export const clearAuthCookie = (res) => res.clearCookie(COOKIE_NAME, {
-    httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production',
-});
-
-/** Sets req.userId from the cookie, or answers 401. */
+/** Requires `Authorization: Bearer <token>`; sets req.userId, or answers 401. */
 export const requireAuth = (req, res, next) => {
+    const header = req.headers.authorization || '';
+    const token = header.startsWith('Bearer ') ? header.slice(7) : null;
     try {
-        req.userId = jwt.verify(req.cookies?.[COOKIE_NAME], process.env.JWT_SECRET).sub;
+        req.userId = jwt.verify(token, process.env.JWT_SECRET).sub;
         next();
     } catch {
         res.status(401).json({ message: 'Not signed in' });

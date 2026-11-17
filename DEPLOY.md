@@ -1,78 +1,83 @@
-# Deploying SRI.CR In-App Mail on Render
+# Deploying SRI.CR In-App Mail (Vercel + Render + Atlas)
 
-One Render web service runs everything: the Express API **and** the built website (`dist/`). Because the site and the API share one
-address, the login cookie works with no extra settings. The database stays on MongoDB Atlas.
+Same layout as the SRI.CR appointment app: the **website** on Vercel, the **API** on Render, the **database** on MongoDB Atlas.
+Total cost: **$0**.
 
-| Piece | Where | Address |
+| Piece | Service | Address |
 |---|---|---|
-| Website + API | Render web service | `https://<your-service>.onrender.com` |
-| Database | MongoDB Atlas (already set up) | – |
+| Website (this repo's root: `src/`, `index.html`) | Vercel | `https://<your-site>.vercel.app` |
+| API (`server/`) | Render | `https://<your-api>.onrender.com` |
+| Database | MongoDB Atlas (you already have it) | – |
 
-## 0. Put the code on GitHub (once)
+Login works like the appointment app: the API returns a token and the site sends it in an `Authorization: Bearer` header
+(no cookies), so the two addresses can differ.
 
-This folder is not a git repository yet. `.env` files and `node_modules` are already ignored, so your secrets are not uploaded.
+## 0. Code on GitHub
 
-```bash
-git init
-git add .
-git status          # check that no .env file is listed
-git commit -m "SRI.CR In-App Mail"
-# create an empty repo on github.com, then:
-git remote add origin https://github.com/<you>/sricr-inapp-mail.git
-git branch -M main
-git push -u origin main
-```
+Done: `https://github.com/Sridhar-Raman/In-App-Mail`. After any change: `git add . && git commit -m "…" && git push`. Render and Vercel
+redeploy on every push to `main`.
 
-## 1. Database: allow Render to connect
+## 1. Database: allow the host to connect
 
-Atlas → **Network Access → Add IP Address → Allow access from anywhere (0.0.0.0/0)**. Render's free servers do not have a fixed
-IP address. The database password protects it, so keep it strong. (If you already did this for the appointment app on the same
-Atlas project, there is nothing to do.)
+Atlas → **Network Access → Add IP Address → Allow access from anywhere (0.0.0.0/0)**. Free hosts have changing IP addresses.
+(If you already did this for the appointment app, there is nothing to do.)
 
-## 2. Create the service on Render
+## 2. API on Render
 
-**Option A: Blueprint (recommended).** render.com → **New → Blueprint** → pick the GitHub repo. It reads `render.yaml`.
-Fill in the one value it asks for:
-
-- `MONGODB_URI`: the same Atlas connection string as in `server/.env`
-
-`JWT_SECRET` is generated for you. Do not reuse the development one.
-
-**Option B: by hand** (render.com → **New → Web Service** → pick the repo):
+1. render.com → your project → **New → Web Service** (or **New → Blueprint**, which reads `render.yaml`) → pick `Sridhar-Raman/In-App-Mail`.
+2. Settings (by hand):
 
 | Setting | Value |
 |---|---|
 | Runtime | Node |
-| Build Command | `npm install --include=dev && npm run build && npm --prefix server install --omit=dev` |
-| Start Command | `npm --prefix server start` |
+| **Root Directory** | `server` |
+| Build Command | `npm install` |
+| Start Command | `npm start` |
 | Health Check Path | `/api/health` |
+| Instance Type | Free |
 
-Environment variables:
+3. Environment variables:
 
 | Key | Value |
 |---|---|
 | `NODE_VERSION` | `22` |
 | `NODE_ENV` | `production` |
 | `TRUST_PROXY` | `1` |
-| `JWT_SECRET` | a long random string (not the development one) |
-| `MONGODB_URI` | your Atlas connection string |
+| `JWT_SECRET` | click **Generate**, or a long random string (not the development one) |
+| `MONGODB_URI` | your Atlas connection string (paste it only into Render) |
 | `MONGODB_DB` | `sricr_inapp_mail` |
+| `CLIENT_ORIGIN` | the Vercel address from step 3, e.g. `https://sricr-mail.vercel.app` (you can set it after step 3 and redeploy) |
 
-## 3. Check it
+4. After the deploy, open `https://<your-api>.onrender.com/api/health`. It should say `{"status":"ok"}`.
 
-Open `https://<your-service>.onrender.com/api/health`: it should show `{"status":"ok"}`. Then open the root address, sign up,
-and sign in.
+**Free plan limits.** The service sleeps after 15 minutes without visits, and the first request afterwards takes about
+30–60 seconds. A free monitor at uptimerobot.com that requests `/api/health` every 5 minutes keeps it awake. The paid
+Starter plan (about $7 a month) removes the limit.
 
-The sample colleagues and mail from `npm run seed` are for development. Do **not** run the seed against the live database.
+## 3. Website on Vercel
 
-**Free plan limits.** The service sleeps after 15 minutes without visits, and the first request afterwards takes about 30–60
-seconds. A free monitor at uptimerobot.com that requests `/api/health` every 5 minutes keeps it awake. The paid Starter plan
-(about $7 a month) removes the limit.
+1. vercel.com → **Add New → Project** → import `Sridhar-Raman/In-App-Mail`.
+2. **Root Directory:** leave as the repository root. Framework: Vite (detected). Build command `npm run build`, output `dist`
+   (the defaults).
+3. **Environment Variable:** `VITE_API_URL` = `https://<your-api>.onrender.com` (no trailing slash, no `/api`).
+4. Deploy. If the address Vercel gives you differs from what you put in Render's `CLIENT_ORIGIN`, update it there and redeploy the API.
+
+Pages like `/home` and `/login` work on refresh because `vercel.json` sends every path to the app.
+
+`VITE_API_URL` is read when the site is **built**. If you change it, redeploy the site on Vercel.
+
+## 4. Check it
+
+Open the Vercel address → **Sign up** → **Log in** → the mailbox. If login says "Cannot reach the server", check that
+`VITE_API_URL` is right and that `CLIENT_ORIGIN` on Render matches the Vercel address exactly (including `https://`, no trailing
+slash). The first request after the API has been idle takes up to a minute.
+
+Do **not** run `npm run seed` against the live database. The sample colleagues and mail are for development only.
 
 ## Good to know
 
 - **Attachments** are stored in MongoDB (5 MB each, up to 5 per mail), so they count towards your Atlas storage.
-- **Updating the app:** push to GitHub; Render rebuilds and redeploys automatically.
-- **Custom address:** Render → the service → **Settings → Custom Domains**, and add the DNS record it shows at your registrar.
-  HTTPS is automatic.
-- **Production cookies** are `HttpOnly`, `Secure` and `SameSite=Lax`, so the site only works over `https://` (Render provides it).
+- **Custom address:** Vercel → Project → **Settings → Domains**. Then add it to Render's `CLIENT_ORIGIN`, comma-separated
+  (`https://sricr-mail.vercel.app,https://mail.sricr.com`).
+- **Security note:** the login token is kept in the browser's storage (localStorage with "Keep me signed in", otherwise
+  sessionStorage), the same as the appointment app. Tokens last 7 days (1 day without "Keep me signed in").

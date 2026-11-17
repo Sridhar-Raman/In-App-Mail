@@ -1,16 +1,16 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { API_BASE, authHeader, tokenStore } from '../api/token';
 
 /**
- * Auth against the Express/MongoDB API (`/api/auth/*`, proxied by Vite). The session lives in an httpOnly
- * cookie set by the server, so nothing sensitive is kept in JS or localStorage.
+ * Auth against the Express/MongoDB API (`/api/auth/*`). Login returns a token that is kept in the browser
+ * (localStorage with "Keep me signed in", otherwise sessionStorage) and sent as `Authorization: Bearer`.
  */
 const request = async (path, body) => {
     let res;
     try {
-        res = await fetch(`/api/auth/${path}`, {
+        res = await fetch(`${API_BASE}/api/auth/${path}`, {
             method: body === undefined ? 'GET' : 'POST',
-            credentials: 'include',
-            headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+            headers: { ...(body === undefined ? {} : { 'Content-Type': 'application/json' }), ...authHeader() },
             body: body === undefined ? undefined : JSON.stringify(body),
         });
     } catch {
@@ -28,11 +28,12 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Restore the session from the cookie on first load.
+    // Restore the session from the stored token on first load.
     useEffect(() => {
+        if (!tokenStore.get()) { setLoading(false); return; }
         request('me')
             .then((data) => setUser(data.user))
-            .catch(() => setUser(null))
+            .catch((err) => { if (err.status === 401) tokenStore.clear(); setUser(null); })
             .finally(() => setLoading(false));
     }, []);
 
@@ -42,11 +43,12 @@ export const AuthProvider = ({ children }) => {
 
     const login = useCallback(async ({ email, password, remember }) => {
         const data = await request('login', { email, password, remember: !!remember });
+        tokenStore.set(data.token, !!remember);
         setUser(data.user);
     }, []);
 
     const logout = useCallback(async () => {
-        await request('logout', {}).catch(() => {});
+        tokenStore.clear();
         setUser(null);
     }, []);
 

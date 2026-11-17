@@ -415,3 +415,10 @@
 .mb-card .th-att-link { background: #e0f3f2; border-color: #b6dedc; color: #0d6970; }
 .mb-card .th-reply-bar .mbtn-outline { border-color: #9fd3d1; color: #0d6970; background: #fff; }
 .mb-card .th-reply-bar .mbtn-outline:hover { background: #e5f4f3; }
+
+/* attachment buttons (they used to be links; downloads now need the login token) */
+.th-att-link { font: inherit; cursor: pointer; text-align: left; }
+.th-img-btn { display: block; padding: 0; border: 0; background: none; cursor: zoom-in; line-height: 0; }
+.th-img-ph { display: block; width: 240px; height: 120px; border-radius: 10px; background: #e3f3f2; }
+.cmp-files .file-open { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0; border: 0; background: none; font: inherit; font-weight: 600; color: #0d6970; cursor: pointer; }
+.cmp-files .file-open:hover { text-decoration: underline; }

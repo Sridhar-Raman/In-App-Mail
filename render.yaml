@@ -1,11 +1,12 @@
-# Render Blueprint: one web service that serves BOTH the API and the built website (same origin, so the login cookie just works).
+# Render Blueprint: deploys the API (free plan). The website goes on Vercel; see DEPLOY.md.
 services:
   - type: web
-    name: sricr-inapp-mail
+    name: sricr-mail-api
     runtime: node
     plan: free
-    buildCommand: npm install --include=dev && npm run build && npm --prefix server install --omit=dev
-    startCommand: npm --prefix server start
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION
@@ -20,3 +21,5 @@ services:
         sync: false        # your Atlas connection string
       - key: MONGODB_DB
         value: sricr_inapp_mail
+      - key: CLIENT_ORIGIN
+        sync: false        # the Vercel address, e.g. https://sricr-mail.vercel.app (comma-separate more, e.g. ,https://mail.sricr.com)

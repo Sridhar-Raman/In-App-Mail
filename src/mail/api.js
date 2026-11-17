@@ -1,17 +1,25 @@
+import { API_BASE, authHeader, tokenStore } from '../api/token';
+
+/** An expired / invalid token anywhere sends the user back to the login page. */
+const signedOut = () => {
+    tokenStore.clear();
+    window.location.assign('/login');
+};
+
 /** Thin fetch wrapper for /api/mail. Throws Error(message) with the server's message on failure. */
 export const api = async (path, { method = 'GET', body, form } = {}) => {
     let res;
     try {
-        res = await fetch(`/api/mail${path}`, {
+        res = await fetch(`${API_BASE}/api/mail${path}`, {
             method,
-            credentials: 'include',
-            headers: body ? { 'Content-Type': 'application/json' } : undefined,
+            headers: { ...(body ? { 'Content-Type': 'application/json' } : {}), ...authHeader() },
             body: form || (body ? JSON.stringify(body) : undefined),
         });
     } catch {
         throw new Error('Cannot reach the server. Please try again.');
     }
     const data = await res.json().catch(() => ({}));
+    if (res.status === 401) signedOut();
     if (!res.ok)
         throw Object.assign(new Error(data.message || 'Request failed'), { status: res.status });
     return data;
@@ -34,4 +42,46 @@ export const uploadAttachment = (file) => {
     form.append('file', file);
     return api('/attachments', { method: 'POST', form });
 };
-export const attachmentUrl = (id, download = false) => `/api/mail/attachments/${id}${download ? '?download=1' : ''}`;
+
+// Attachments need the login token, so plain links and <img src> cannot fetch them:
+// download the bytes with the Authorization header, then use a temporary blob URL.
+export const fetchAttachmentBlob = async (id, download = false) => {
+    let res;
+    try {
+        res = await fetch(`${API_BASE}/api/mail/attachments/${id}${download ? '?download=1' : ''}`, { headers: authHeader() });
+    } catch {
+        throw new Error('Cannot reach the server. Please try again.');
+    }
+    if (res.status === 401) signedOut();
+    if (!res.ok) throw new Error('Attachment not available');
+    return res.blob();
+};
+
+const revokeLater = (url) => setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+/** Open an attachment in a new tab (images and PDFs show inline, anything else downloads). */
+export const openAttachment = async (id) => {
+    // Opened now, inside the click, so the pop-up blocker allows it; pointed at the file once it has downloaded.
+    const win = window.open('about:blank', '_blank');
+    try {
+        const url = URL.createObjectURL(await fetchAttachmentBlob(id));
+        if (win) win.location.href = url;
+        else window.location.assign(url);
+        revokeLater(url);
+    } catch (err) {
+        win?.close();
+        throw err;
+    }
+};
+
+/** Save an attachment to disk under its own file name. */
+export const downloadAttachment = async (id, name) => {
+    const url = URL.createObjectURL(await fetchAttachmentBlob(id, true));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    revokeLater(url);
+};

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../context/AuthContext';
-import { MAX_FILES, MAX_FILE_MB, attachmentUrl, saveMessage, uploadAttachment } from './api';
+import { MAX_FILES, MAX_FILE_MB, openAttachment, saveMessage, uploadAttachment } from './api';
 import { formatSize } from './helpers';
 import { useDialogs } from './Dialogs';
 import RecipientField from './RecipientField';
@@ -136,7 +136,7 @@ const Compose = ({ variant = 'panel', seed = {}, onClose, onDone }) => {
                         <ul className="cmp-files">
                             {files.map((f) => (
                                 <li key={f.id}>
-                                    <Icon name="file" size={16} /><a href={attachmentUrl(f.id)} target="_blank" rel="noreferrer">{f.name}</a><small>{formatSize(f.size)}</small>
+                                    <Icon name="file" size={16} /><button type="button" className="file-open" title="Open" onClick={() => openAttachment(f.id).catch((err) => notify(err.message, 'error'))}>{f.name}</button><small>{formatSize(f.size)}</small>
                                     <button type="button" aria-label={`Remove ${f.name}`} onClick={() => setFiles(files.filter((x) => x.id !== f.id))}><Icon name="close" size={14} /></button>
                                 </li>
                             ))}

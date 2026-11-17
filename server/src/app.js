@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import authRoutes from './routes/auth.js';
@@ -14,12 +13,12 @@ const app = express();
 if (process.env.TRUST_PROXY)
     app.set('trust proxy', Number(process.env.TRUST_PROXY) || process.env.TRUST_PROXY);
 
-app.use(helmet());
-// CLIENT_ORIGIN may list several origins, comma-separated. Same-origin requests (the site served by this server) need no CORS.
-const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',').map((o) => o.trim()).filter(Boolean);
-app.use(cors({ origin: origins, credentials: true }));
+// The API is called from the website on another address (Vercel), so its responses must be readable cross-origin.
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+// CLIENT_ORIGIN lists the website address(es), comma-separated, e.g. https://sricr-mail.vercel.app,https://mail.sricr.com
+const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',').map((o) => o.trim().replace(/\/$/, '')).filter(Boolean);
+app.use(cors({ origin: origins, maxAge: 600 }));
 app.use(express.json({ limit: '100kb' }));
-app.use(cookieParser());
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/api/auth', authRoutes);

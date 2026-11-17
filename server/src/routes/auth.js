@@ -2,7 +2,7 @@ import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
 import User from '../models/User.js';
-import { clearAuthCookie, requireAuth, setAuthCookie, signToken } from '../middleware/auth.js';
+import { requireAuth, signToken } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -62,25 +62,20 @@ router.post('/login', limiter, async (req, res, next) => {
         const user = await User.findOne({ email: data.email }).select('+passwordHash');
         if (!user || !(await user.verifyPassword(data.password)))
             return res.status(401).json({ message: 'Invalid email or password.' });
-        setAuthCookie(res, signToken(user.id), !!data.remember);
-        res.json({ user: user.toPublic() });
+        res.json({ user: user.toPublic(), token: signToken(user.id, !!data.remember) });
     } catch (err) {
         next(err);
     }
 });
 
-router.post('/logout', (_req, res) => {
-    clearAuthCookie(res);
-    res.json({ ok: true });
-});
+// Tokens are stateless: signing out just means the browser forgets its token.
+router.post('/logout', (_req, res) => res.json({ ok: true }));
 
 router.get('/me', requireAuth, async (req, res, next) => {
     try {
         const user = await User.findById(req.userId);
-        if (!user) {
-            clearAuthCookie(res);
+        if (!user)
             return res.status(401).json({ message: 'Not signed in' });
-        }
         res.json({ user: user.toPublic() });
     } catch (err) {
         next(err);
